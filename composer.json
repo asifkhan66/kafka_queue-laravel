@@ -1,0 +1,18 @@
+{
+    "name": "asifs/kafka_queue-laravel",
+    "description": "kafka queue for laravel microservices.",
+    "require": {
+        "laravel/framework": "10.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Asifs\\KafkaQueueLaravel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Asif Khan Pathan",
+            "email": "137769714+asifkhan66@users.noreply.github.com"
+        }
+    ]
+}
