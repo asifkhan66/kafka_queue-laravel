@@ -13,10 +13,13 @@ class KafkaConnector implements ConnectorInterface
         $conf = new \RdKafka\Conf();
 
         $conf->set('bootstrap.servers', $config['bootstrap_servers']);
-        $conf->set('security.protocol', $config['security_protocol']);
-        $conf->set('sasl.mechanisms', $config['sasl_mechanisms']);
-        $conf->set('sasl.username', $config['sasl_username']);
-        $conf->set('sasl.password', $config['sasl_password']);
+        
+        if ($config['security_protocol'] != 'PLAINTEXT') {
+            $conf->set('security.protocol', $config['security_protocol']);
+            $conf->set('sasl.mechanisms', $config['sasl_mechanisms']);
+            $conf->set('sasl.username', $config['sasl_username']);
+            $conf->set('sasl.password', $config['sasl_password']);
+        }
 
         $producer = new \RdKafka\Producer($conf);
 
