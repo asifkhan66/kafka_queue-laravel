@@ -23,7 +23,7 @@ class KafkaQueue extends Queue implements QueueContract
     public function push($job, $data = '', $queue = null)
     {
         $topic = $this->producer->newTopic($queue ?? env('KAFKA_QUEUE'));
-        $topic->produce(RD_KAFKA_PARTITION_UA, -1, serialize($job));
+        $topic->produce(RD_KAFKA_PARTITION_UA, 0, serialize($job));
         $this->producer->flush(1000);
     }
 
@@ -48,10 +48,10 @@ class KafkaQueue extends Queue implements QueueContract
                     $job->handle();
                     break;
                 case RD_KAFKA_RESP_ERR__PARTITION_EOF:
-                    var_dump("No more messages; will wait for more\n");
+                    var_dump("No more messages; will wait for more");
                     break;
                 case RD_KAFKA_RESP_ERR__TIMED_OUT:
-                    var_dump("Timed out\n");
+                    var_dump("Timed out");
                     break;
                 default:
                     throw new \Exception($message->errstr(), $message->err);
