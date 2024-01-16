@@ -40,7 +40,7 @@ class KafkaQueue extends Queue implements QueueContract
         $this->consumer->subscribe([$queue]);
 
         try {
-            $message = $this->consumer->consume(120 * 1000);
+            $message = $this->consumer->consume(10 * 1000);
 
             switch ($message->err) {
                 case RD_KAFKA_RESP_ERR_NO_ERROR:
@@ -48,10 +48,10 @@ class KafkaQueue extends Queue implements QueueContract
                     $job->handle();
                     break;
                 case RD_KAFKA_RESP_ERR__PARTITION_EOF:
-                    var_dump("No more messages; will wait for more");
+                    // var_dump("No more messages; will wait for more");
                     break;
                 case RD_KAFKA_RESP_ERR__TIMED_OUT:
-                    var_dump("Timed out");
+                    // var_dump("Timed out");
                     break;
                 default:
                     throw new \Exception($message->errstr(), $message->err);
